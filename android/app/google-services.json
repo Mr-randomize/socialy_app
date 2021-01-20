@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "519373991959",
+    "project_id": "socialy-dd36b",
+    "storage_bucket": "socialy-dd36b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519373991959:android:58d3b34f18ccefc8096c52",
+        "android_client_info": {
+          "package_name": "com.iviberberi.socialy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "519373991959-ht7se7f0q71mesqrdfsv1um3vqqe2h1r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iviberberi.socialy",
+            "certificate_hash": "fdbffd6e17295522295c15c92f699e0b3b6e43c1"
+          }
+        },
+        {
+          "client_id": "519373991959-5sr7eokrkfg8a36mtmbjmv539bbleove.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF_GG9SKFM6ZjkRzhG7sznZgHttbhxe0Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "519373991959-5sr7eokrkfg8a36mtmbjmv539bbleove.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
