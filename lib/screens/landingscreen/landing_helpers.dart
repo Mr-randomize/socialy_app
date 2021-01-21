@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:socialy_app/constants/Constantcolors.dart';
 import 'package:socialy_app/screens/homescreen/home_screen.dart';
 import 'package:socialy_app/screens/landingscreen/landing_services.dart';
+import 'package:socialy_app/screens/landingscreen/landing_utils.dart';
 import 'package:socialy_app/services/authentication.dart';
 
 class LandingHelpers with ChangeNotifier {
@@ -202,8 +203,8 @@ class LandingHelpers with ChangeNotifier {
                           ),
                         ),
                         onPressed: () {
-                          Provider.of<LandingService>(context, listen: false)
-                              .signUpSheet(context);
+                          Provider.of<LandingUtils>(context, listen: false)
+                              .selectAvatarOptionsSheet(context);
                         })
                   ],
                 )

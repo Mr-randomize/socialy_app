@@ -8,6 +8,7 @@ import 'package:socialy_app/constants/Constantcolors.dart';
 import 'package:socialy_app/screens/homescreen/home_screen.dart';
 import 'package:socialy_app/screens/landingscreen/landing_utils.dart';
 import 'package:socialy_app/services/authentication.dart';
+import 'package:socialy_app/services/firebase_operations.dart';
 
 class LandingService with ChangeNotifier {
   final ConstantColors constantColors = ConstantColors();
@@ -44,6 +45,7 @@ class LandingService with ChangeNotifier {
                 ),
                 Container(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       MaterialButton(
                         child: Text(
@@ -68,7 +70,12 @@ class LandingService with ChangeNotifier {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<FirebaseOperations>(context,
+                                  listen: false)
+                              .uploadUserAvatar(context)
+                              .whenComplete(() => signUpSheet(context));
+                        },
                       ),
                     ],
                   ),
@@ -84,7 +91,7 @@ class LandingService with ChangeNotifier {
       height: MediaQuery.of(context).size.height * 0.40,
       width: MediaQuery.of(context).size.width,
       child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('allUsers').snapshots(),
+          stream: FirebaseFirestore.instance.collection('users').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -102,6 +109,7 @@ class LandingService with ChangeNotifier {
                         ),
                         onPressed: () {}),
                     leading: CircleAvatar(
+                      backgroundColor: constantColors.transparent,
                       backgroundImage:
                           NetworkImage(documentsSnapshot.data()['userimage']),
                     ),
@@ -154,6 +162,9 @@ class LandingService with ChangeNotifier {
                     ),
                   ),
                   CircleAvatar(
+                    backgroundImage: FileImage(
+                        Provider.of<LandingUtils>(context, listen: false)
+                            .getUserAvatar),
                     backgroundColor: constantColors.redColor,
                     radius: 60.0,
                   ),
@@ -224,6 +235,20 @@ class LandingService with ChangeNotifier {
                                 .createAccount(emailController.text,
                                     passwordController.text)
                                 .whenComplete(() {
+                              print('Creating collection');
+                              Provider.of<FirebaseOperations>(context,
+                                      listen: false)
+                                  .createUserCollection(context, {
+                                'useruid': Provider.of<Authentication>(context,
+                                        listen: false)
+                                    .getUserUid,
+                                'useremail': emailController.text,
+                                'username': userNameController.text,
+                                'userimage': Provider.of<LandingUtils>(context,
+                                        listen: false)
+                                    .getUserAvatarUrl,
+                              });
+                            }).whenComplete(() {
                               Navigator.pushReplacement(
                                   context,
                                   PageTransition(
