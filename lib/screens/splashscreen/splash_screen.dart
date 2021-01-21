@@ -17,11 +17,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 1),
-        () => Navigator.pushReplacement(
-            context,
-            PageTransition(
-                child: LandingScreen(), type: PageTransitionType.leftToRight)));
+      Duration(seconds: 1),
+      () => Navigator.pushReplacement(
+        context,
+        PageTransition(
+            child: LandingScreen(), type: PageTransitionType.leftToRight),
+      ),
+    );
   }
 
   @override

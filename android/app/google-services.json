@@ -7,18 +7,26 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:519373991959:android:58d3b34f18ccefc8096c52",
+        "mobilesdk_app_id": "1:519373991959:android:6549a4548168347d096c52",
         "android_client_info": {
-          "package_name": "com.iviberberi.socialy"
+          "package_name": "com.iviberberi.socialy_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "519373991959-ht7se7f0q71mesqrdfsv1um3vqqe2h1r.apps.googleusercontent.com",
+          "client_id": "519373991959-4fvdnpt5ui7n5d6gah3r9d8kfdmu28k5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.iviberberi.socialy",
+            "package_name": "com.iviberberi.socialy_app",
             "certificate_hash": "fdbffd6e17295522295c15c92f699e0b3b6e43c1"
+          }
+        },
+        {
+          "client_id": "519373991959-vr5kf9spflqg8e17q3kmuklcobaj3drh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iviberberi.socialy_app",
+            "certificate_hash": "8b774af0c4f98e47908517a2743e6c779a696c39"
           }
         },
         {
