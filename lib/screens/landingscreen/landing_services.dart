@@ -337,8 +337,7 @@ class LandingService with ChangeNotifier {
                           color: constantColors.blueColor,
                         ),
                         onPressed: () {
-                          if (userNameController.text.isNotEmpty &&
-                              passwordController.text.isNotEmpty &&
+                          if (passwordController.text.isNotEmpty &&
                               emailController.text.isNotEmpty) {
                             Provider.of<Authentication>(context, listen: false)
                                 .logIntoAccount(emailController.text,

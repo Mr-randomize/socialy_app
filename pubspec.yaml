@@ -34,6 +34,7 @@ dependencies:
   firebase_storage: ^7.0.0
   cloud_firestore: ^0.16.0
   image_picker: ^0.6.7+21
+  custom_navigation_bar: ^0.7.1
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +54,7 @@ flutter:
 
   assets:
     - assets/images/login.png
+    - assets/images/empty.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

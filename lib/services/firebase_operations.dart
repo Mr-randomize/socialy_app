@@ -8,8 +8,16 @@ import 'package:socialy_app/screens/landingscreen/landing_utils.dart';
 import 'package:socialy_app/services/authentication.dart';
 
 class FirebaseOperations with ChangeNotifier {
+  UploadTask imageUploadTask;
+  String initUserEmail, initUserName, initUserImage;
+
+  String get getInitUserEmail => initUserEmail;
+
+  String get getInitUserName => initUserName;
+
+  String get getInitUserImage => initUserImage;
+
   Future uploadUserAvatar(BuildContext context) async {
-    UploadTask imageUploadTask;
     final File avatarFile =
         Provider.of<LandingUtils>(context, listen: false).getUserAvatar;
     Reference imageRef = FirebaseStorage.instance
@@ -30,5 +38,19 @@ class FirebaseOperations with ChangeNotifier {
         .collection('users')
         .doc(Provider.of<Authentication>(context, listen: false).getUserUid)
         .set(data);
+  }
+
+  Future initUserData(BuildContext context) async {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(Provider.of<Authentication>(context, listen: false).getUserUid)
+        .get()
+        .then((doc) {
+      print('Fetching user data');
+      initUserName = doc.data()['username'];
+      initUserEmail = doc.data()['useremail'];
+      initUserImage = doc.data()['userimage'];
+      notifyListeners();
+    });
   }
 }

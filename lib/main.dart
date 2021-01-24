@@ -2,12 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:socialy_app/constants/Constantcolors.dart';
+import 'package:socialy_app/screens/feed/feed_helpers.dart';
+import 'package:socialy_app/screens/homescreen/homepage_helpers.dart';
 import 'package:socialy_app/screens/landingscreen/landing_helpers.dart';
 import 'package:socialy_app/screens/landingscreen/landing_services.dart';
 import 'package:socialy_app/screens/landingscreen/landing_utils.dart';
+import 'package:socialy_app/screens/profile/profile_helpers.dart';
 import 'package:socialy_app/screens/splashscreen/splash_screen.dart';
 import 'package:socialy_app/services/authentication.dart';
 import 'package:socialy_app/services/firebase_operations.dart';
+import 'package:socialy_app/utils/upload_post.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +42,10 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => LandingService()),
           ChangeNotifierProvider(create: (_) => FirebaseOperations()),
           ChangeNotifierProvider(create: (_) => LandingUtils()),
+          ChangeNotifierProvider(create: (_) => HomepageHelpers()),
+          ChangeNotifierProvider(create: (_) => ProfileHelpers()),
+          ChangeNotifierProvider(create: (_) => UploadPost()),
+          ChangeNotifierProvider(create: (_) => FeedHelpers()),
         ]);
   }
 }
