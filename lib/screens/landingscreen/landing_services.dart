@@ -102,14 +102,51 @@ class LandingService with ChangeNotifier {
                 children: snapshot.data.docs
                     .map((DocumentSnapshot documentsSnapshot) {
                   return ListTile(
-                    trailing: IconButton(
-                        icon: Icon(
-                          FontAwesomeIcons.trash,
-                          color: constantColors.redColor,
-                        ),
-                        onPressed: () {}),
+                    trailing: Container(
+                      width: 120,
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                              icon: Icon(
+                                FontAwesomeIcons.check,
+                                color: constantColors.blueColor,
+                              ),
+                              onPressed: () {
+                                Provider.of<Authentication>(context,
+                                        listen: false)
+                                    .logIntoAccount(
+                                      documentsSnapshot.data()['useremail'],
+                                      documentsSnapshot.data()['userpassword'],
+                                    )
+                                    .whenComplete(
+                                      () => Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                            child: HomeScreen(),
+                                            type:
+                                                PageTransitionType.leftToRight),
+                                      ),
+                                    );
+                              }),
+                          IconButton(
+                              icon: Icon(
+                                FontAwesomeIcons.trashAlt,
+                                color: constantColors.redColor,
+                              ),
+                              onPressed: () {
+                                Provider.of<FirebaseOperations>(context,
+                                        listen: false)
+                                    .deleteUserData(
+                                  documentsSnapshot.id,
+                                );
+                              }),
+                        ],
+                      ),
+                    ),
                     leading: CircleAvatar(
-                      backgroundColor: constantColors.transparent,
+                      backgroundColor: constantColors.darkColor,
                       backgroundImage:
                           NetworkImage(documentsSnapshot.data()['userimage']),
                     ),
@@ -118,7 +155,7 @@ class LandingService with ChangeNotifier {
                       style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: constantColors.greenColor),
+                          color: constantColors.whiteColor),
                     ),
                     title: Text(
                       documentsSnapshot.data()['username'],
@@ -244,6 +281,7 @@ class LandingService with ChangeNotifier {
                                     .getUserUid,
                                 'useremail': emailController.text,
                                 'username': userNameController.text,
+                                'userpassword': passwordController.text,
                                 'userimage': Provider.of<LandingUtils>(context,
                                         listen: false)
                                     .getUserAvatarUrl,

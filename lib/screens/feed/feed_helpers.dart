@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:socialy_app/constants/Constantcolors.dart';
 import 'package:socialy_app/services/authentication.dart';
+import 'package:socialy_app/utils/post_options.dart';
 import 'package:socialy_app/utils/upload_post.dart';
 
 class FeedHelpers with ChangeNotifier {
@@ -172,6 +173,16 @@ class FeedHelpers with ChangeNotifier {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           GestureDetector(
+                            onTap: () {
+                              Provider.of<PostFunctions>(context, listen: false)
+                                  .addLike(
+                                context,
+                                documentSnapshot.id,
+                                Provider.of<Authentication>(context,
+                                        listen: false)
+                                    .getUserUid,
+                              );
+                            },
                             child: Icon(
                               FontAwesomeIcons.heart,
                               color: constantColors.redColor,
@@ -198,6 +209,11 @@ class FeedHelpers with ChangeNotifier {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           GestureDetector(
+                            onTap: () {
+                              Provider.of<PostFunctions>(context, listen: false)
+                                  .showCommentsSheet(context, documentSnapshot,
+                                      documentSnapshot.id);
+                            },
                             child: Icon(
                               FontAwesomeIcons.comment,
                               color: constantColors.blueColor,

@@ -29,13 +29,22 @@ class HomepageHelpers with ChangeNotifier {
         CustomNavigationBarItem(icon: Icon(EvaIcons.home)),
         CustomNavigationBarItem(icon: Icon(Icons.message_rounded)),
         CustomNavigationBarItem(
-            icon: CircleAvatar(
-          radius: 35.0,
-          backgroundColor: constantColors.blueGreyColor,
-          backgroundImage: NetworkImage(
-              Provider.of<FirebaseOperations>(context, listen: false)
-                  .getInitUserImage),
-        )),
+          icon: (Provider.of<FirebaseOperations>(context, listen: false)
+                      .getInitUserImage !=
+                  null)
+              ? CircleAvatar(
+                  radius: 35.0,
+                  backgroundColor: constantColors.blueGreyColor,
+                  backgroundImage: NetworkImage(
+                      Provider.of<FirebaseOperations>(context, listen: false)
+                          .getInitUserImage),
+                )
+              : CircleAvatar(
+                  radius: 35.0,
+                  backgroundColor: constantColors.blueGreyColor,
+                  child: Icon(Icons.account_circle_outlined),
+                ),
+        ),
       ],
     );
   }

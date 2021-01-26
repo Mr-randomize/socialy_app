@@ -70,7 +70,7 @@ class ProfileHelpers with ChangeNotifier {
             ),
           ),
           Container(
-            width: 200.0,
+            width: 190.0,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

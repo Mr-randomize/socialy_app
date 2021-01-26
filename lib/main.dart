@@ -11,6 +11,7 @@ import 'package:socialy_app/screens/profile/profile_helpers.dart';
 import 'package:socialy_app/screens/splashscreen/splash_screen.dart';
 import 'package:socialy_app/services/authentication.dart';
 import 'package:socialy_app/services/firebase_operations.dart';
+import 'package:socialy_app/utils/post_options.dart';
 import 'package:socialy_app/utils/upload_post.dart';
 
 void main() async {
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => ProfileHelpers()),
           ChangeNotifierProvider(create: (_) => UploadPost()),
           ChangeNotifierProvider(create: (_) => FeedHelpers()),
+          ChangeNotifierProvider(create: (_) => PostFunctions()),
         ]);
   }
 }
