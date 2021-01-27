@@ -59,7 +59,7 @@ class PostFunctions with ChangeNotifier {
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.75,
+              height: MediaQuery.of(context).size.height * 0.76,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: constantColors.blueGreyColor,
