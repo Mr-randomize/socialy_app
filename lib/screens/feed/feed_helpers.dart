@@ -63,7 +63,10 @@ class FeedHelpers with ChangeNotifier {
                 topRight: Radius.circular(18.0)),
           ),
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+            stream: FirebaseFirestore.instance
+                .collection('posts')
+                .orderBy('time', descending: true)
+                .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -87,6 +90,8 @@ class FeedHelpers with ChangeNotifier {
       BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     return ListView(
       children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
+        Provider.of<PostFunctions>(context, listen: false)
+            .showTimeAgo(documentSnapshot.data()['time']);
         return Container(
           height: MediaQuery.of(context).size.height * 0.62,
           width: MediaQuery.of(context).size.width,
@@ -133,7 +138,8 @@ class FeedHelpers with ChangeNotifier {
                                         fontSize: 14.0),
                                     children: <TextSpan>[
                                       TextSpan(
-                                        text: ' , 12 hours ago',
+                                        text:
+                                            ' ,${Provider.of<PostFunctions>(context, listen: false).getTimePosted}',
                                         style: TextStyle(
                                           color: constantColors.lightColor
                                               .withOpacity(0.8),
@@ -145,6 +151,35 @@ class FeedHelpers with ChangeNotifier {
                           ],
                         ),
                       ),
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.05,
+                      child: StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('posts')
+                              .doc(documentSnapshot.id)
+                              .collection('awards')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(child: CircularProgressIndicator());
+                            } else {
+                              return ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: snapshot.data.docs
+                                    .map((DocumentSnapshot docSnapshot) {
+                                  return Container(
+                                    height: 30,
+                                    width: 30,
+                                    child: Image.network(
+                                        documentSnapshot.data()['award']),
+                                  );
+                                }).toList(),
+                              );
+                            }
+                          }),
                     )
                   ],
                 ),
@@ -173,6 +208,10 @@ class FeedHelpers with ChangeNotifier {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           GestureDetector(
+                            onLongPress: () {
+                              Provider.of<PostFunctions>(context, listen: false)
+                                  .showLikes(context, documentSnapshot.id);
+                            },
                             onTap: () {
                               Provider.of<PostFunctions>(context, listen: false)
                                   .addLike(
@@ -234,17 +273,31 @@ class FeedHelpers with ChangeNotifier {
                               size: 22.0,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              '0',
-                              style: TextStyle(
-                                color: constantColors.whiteColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          )
+                          StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('posts')
+                                  .doc(documentSnapshot.id)
+                                  .collection('comments')
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Text(
+                                      snapshot.data.docs.length.toString(),
+                                      style: TextStyle(
+                                        color: constantColors.whiteColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18.0,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }),
                         ],
                       ),
                     ),
@@ -254,23 +307,40 @@ class FeedHelpers with ChangeNotifier {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           GestureDetector(
+                            onTap: Provider.of<PostFunctions>(context,
+                                    listen: false)
+                                .showRewards(context, documentSnapshot.id),
                             child: Icon(
                               FontAwesomeIcons.award,
                               color: constantColors.yellowColor,
                               size: 22.0,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(
-                              '0',
-                              style: TextStyle(
-                                color: constantColors.whiteColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          )
+                          StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('posts')
+                                  .doc(documentSnapshot.id)
+                                  .collection('awards')
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Text(
+                                      snapshot.data.docs.length.toString(),
+                                      style: TextStyle(
+                                        color: constantColors.whiteColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18.0,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }),
                         ],
                       ),
                     ),
