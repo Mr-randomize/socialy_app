@@ -3,9 +3,11 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:socialy_app/constants/Constantcolors.dart';
 import 'package:socialy_app/services/authentication.dart';
+import 'file:///C:/Users/ivi.berberi/AndroidStudioProjects/socialy_app/lib/screens/altprofile/alt_profile.dart';
 import 'package:socialy_app/utils/post_options.dart';
 import 'package:socialy_app/utils/upload_post.dart';
 
@@ -104,6 +106,20 @@ class FeedHelpers with ChangeNotifier {
                 child: Row(
                   children: [
                     GestureDetector(
+                      onTap: () {
+                        if (documentSnapshot.id !=
+                            Provider.of<Authentication>(context, listen: false)
+                                .getUserUid) {
+                          Navigator.pushReplacement(
+                            context,
+                            PageTransition(
+                                child: AltProfile(
+                                  userUid: documentSnapshot.id,
+                                ),
+                                type: PageTransitionType.bottomToTop),
+                          );
+                        }
+                      },
                       child: CircleAvatar(
                         backgroundColor: constantColors.blueGreyColor,
                         radius: 20,
@@ -307,7 +323,12 @@ class FeedHelpers with ChangeNotifier {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           GestureDetector(
-                            onTap: Provider.of<PostFunctions>(context,
+                            onLongPress: () => Provider.of<PostFunctions>(
+                                    context,
+                                    listen: false)
+                                .showAwardsPresenter(
+                                    context, documentSnapshot.id),
+                            onTap: () => Provider.of<PostFunctions>(context,
                                     listen: false)
                                 .showRewards(context, documentSnapshot.id),
                             child: Icon(
@@ -353,7 +374,10 @@ class FeedHelpers with ChangeNotifier {
                               EvaIcons.moreVertical,
                               color: constantColors.whiteColor,
                             ),
-                            onPressed: () {})
+                            onPressed: () {
+                              Provider.of<PostFunctions>(context, listen: false)
+                                  .showPostOption(context, documentSnapshot.id);
+                            })
                         : Container(
                             width: 0,
                             height: 0,

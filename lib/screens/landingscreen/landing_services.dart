@@ -139,8 +139,7 @@ class LandingService with ChangeNotifier {
                                 Provider.of<FirebaseOperations>(context,
                                         listen: false)
                                     .deleteUserData(
-                                  documentsSnapshot.id,
-                                );
+                                        documentsSnapshot.id, 'users');
                               }),
                         ],
                       ),
